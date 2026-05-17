@@ -7,16 +7,35 @@
     body {
       margin: 0;
       height: 100vh;
+      background-color: black;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: black;
+    }
+
+    h1 {
       color: white;
-      font-family: Arial;
+      font-size: 48px;
+      font-family: Arial, sans-serif;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
 </head>
 <body>
-  <h1>NASYA PORTAL IS LIVE ⚡</h1>
+  <h1>NASYA PORTAL</h1>
 </body>
 </html>
