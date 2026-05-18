@@ -1,84 +1,85 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NASYA SECURITY SYSTEM</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
+<title>NASYA SECURITY SYSTEM</title>
 
-    body{
-      margin:0;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:#050816;
-      font-family:Arial;
-      overflow:hidden;
-      color:white;
-    }
+<style>
 
-    .background{
-      position:absolute;
-      width:100%;
-      height:100%;
-      background:
-      radial-gradient(circle at top,#132c63,#050816);
-      z-index:-1;
-    }
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#050816;
+font-family:Arial;
+overflow:hidden;
+color:white;
+}
 
-    .login-box{
-      width:320px;
-      padding:30px;
-      border-radius:20px;
-      background:rgba(0,0,0,0.4);
-      backdrop-filter:blur(10px);
-      box-shadow:0 0 25px #00e5ff;
-      text-align:center;
-    }
+.background{
+position:absolute;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at top,#132c63,#050816);
+z-index:-1;
+}
 
-    h1{
-      color:#00e5ff;
-      margin-bottom:25px;
-      text-shadow:0 0 10px #00e5ff;
-    }
+.login-box{
+width:320px;
+padding:30px;
+border-radius:20px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+box-shadow:0 0 25px #00e5ff;
+text-align:center;
+}
 
-    input{
-      width:90%;
-      padding:12px;
-      margin:10px 0;
-      border:none;
-      border-radius:12px;
-      outline:none;
-      background:#0d1228;
-      color:white;
-      border:1px solid #00e5ff;
-    }
+h1{
+color:#00e5ff;
+margin-bottom:25px;
+text-shadow:0 0 10px #00e5ff;
+}
 
-    button{
-      margin-top:15px;
-      width:95%;
-      padding:12px;
-      border:none;
-      border-radius:12px;
-      background:#00e5ff;
-      color:black;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
+input{
+width:90%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+outline:none;
+background:#0d1228;
+color:white;
+border:1px solid #00e5ff;
+}
 
-    button:hover{
-      box-shadow:0 0 20px #00e5ff;
-    }
+button{
+margin-top:15px;
+width:95%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#00e5ff;
+color:black;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
 
-    #message{
-      margin-top:15px;
-      font-size:14px;
-    }
+button:hover{
+box-shadow:0 0 20px #00e5ff;
+}
 
-  </style>
+#message{
+margin-top:15px;
+font-size:14px;
+}
+
+</style>
 </head>
 
 <body>
@@ -87,17 +88,17 @@
 
 <div class="login-box">
 
-  <h1>NASYA SECURITY SYSTEM</h1>
+<h1>NASYA SECURITY SYSTEM</h1>
 
-  <input type="email" id="email" placeholder="Email">
+<input type="email" id="email" placeholder="Email">
 
-  <input type="text" id="username" placeholder="Username">
+<input type="text" id="username" placeholder="Username">
 
-  <input type="password" id="password" placeholder="Password">
+<input type="password" id="password" placeholder="Password">
 
-  <button id="loginBtn">LOGIN</button>
+<button id="loginBtn">LOGIN</button>
 
-  <p id="message"></p>
+<p id="message"></p>
 
 </div>
 
@@ -106,12 +107,19 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 const firebaseConfig = {
-  apiKey: "MASUKKAN_APIKEY_KAMU",
-  authDomain: "MASUKKAN_AUTHDOMAIN_KAMU",
-  projectId: "MASUKKAN_PROJECTID_KAMU",
-  storageBucket: "MASUKKAN_STORAGEBUCKET_KAMU",
-  messagingSenderId: "MASUKKAN_MESSAGINGSENDERID_KAMU",
-  appId: "MASUKKAN_APPID_KAMU"
+
+apiKey: "MASUKKAN_APIKEY_KAMU",
+
+authDomain: "MASUKKAN_AUTHDOMAIN_KAMU",
+
+projectId: "MASUKKAN_PROJECTID_KAMU",
+
+storageBucket: "MASUKKAN_STORAGEBUCKET_KAMU",
+
+messagingSenderId: "MASUKKAN_MESSAGINGSENDERID_KAMU",
+
+appId: "MASUKKAN_APPID_KAMU"
+
 };
 
 const app = initializeApp(firebaseConfig);
@@ -119,35 +127,38 @@ const app = initializeApp(firebaseConfig);
 document.getElementById("loginBtn")
 .addEventListener("click", function(){
 
-  const username =
-  document.getElementById("username").value;
+const username =
+document.getElementById("username").value;
 
-  const password =
-  document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-  const email =
-  document.getElementById("email").value;
+const email =
+document.getElementById("email").value;
 
-  const message =
-  document.getElementById("message");
+const message =
+document.getElementById("message");
 
-  if(username && password && email){
+if(username && email && password === "190510"){
 
-    localStorage.setItem("username", username);
-    localStorage.setItem("email", email);
+localStorage.setItem("username", username);
 
-    message.innerHTML =
-    "WELCOME " + username;
+localStorage.setItem("email", email);
 
-    setTimeout(() => {
-      window.location.href = "portal.html";
-    }, 1500);
+message.innerHTML =
+"WELCOME " + username;
 
-  }else{
+setTimeout(() => {
 
-    document.body.innerHTML = `
+window.location.href = "portal.html";
+
+},1500);
+
+}else{
+
+document.body.innerHTML = `
+
 <div style="
-background:red;
 height:100vh;
 display:flex;
 flex-direction:column;
@@ -158,26 +169,45 @@ animation:blink 0.3s infinite;
 color:white;
 ">
 
-<h1 style="font-size:60px;">
+<h1 style="
+font-size:70px;
+margin:0;
+">
 ERROR‼️
 </h1>
 
-<p style="font-size:22px;">
+<p style="
+font-size:22px;
+margin-top:15px;
+">
 Cosa stai cercando?
 </p>
 
 </div>
 
 <style>
+
 @keyframes blink{
-0%{background:#ff0000;}
-50%{background:#550000;}
-100%{background:#ff0000;}
+
+0%{
+background:#ff0000;
 }
+
+50%{
+background:#4d0000;
+}
+
+100%{
+background:#ff0000;
+}
+
+}
+
 </style>
+
 `;
 
-  }
+}
 
 });
 
