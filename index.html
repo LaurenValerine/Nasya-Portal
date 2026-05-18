@@ -2,63 +2,158 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Nasya Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASYA SECURITY SYSTEM</title>
+
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial;
+
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#050816;
+      font-family:Arial;
+      overflow:hidden;
+      color:white;
     }
 
-    .box {
-      text-align: center;
-      color: white;
+    .background{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:
+      radial-gradient(circle at top,#132c63,#050816);
+      z-index:-1;
     }
 
-    input {
-      padding: 10px;
-      width: 200px;
-      border: none;
-      outline: none;
-      margin-top: 10px;
-      text-align: center;
+    .login-box{
+      width:320px;
+      padding:30px;
+      border-radius:20px;
+      background:rgba(0,0,0,0.4);
+      backdrop-filter:blur(10px);
+      box-shadow:0 0 25px #00e5ff;
+      text-align:center;
     }
 
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      cursor: pointer;
-      border: none;
+    h1{
+      color:#00e5ff;
+      margin-bottom:25px;
+      text-shadow:0 0 10px #00e5ff;
     }
+
+    input{
+      width:90%;
+      padding:12px;
+      margin:10px 0;
+      border:none;
+      border-radius:12px;
+      outline:none;
+      background:#0d1228;
+      color:white;
+      border:1px solid #00e5ff;
+    }
+
+    button{
+      margin-top:15px;
+      width:95%;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      background:#00e5ff;
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      box-shadow:0 0 20px #00e5ff;
+    }
+
+    #message{
+      margin-top:15px;
+      font-size:14px;
+    }
+
   </style>
 </head>
+
 <body>
 
-  <div class="box">
-    <h2>NASYA PORTAL</h2>
-    <p>Masukkan username</p>
+<div class="background"></div>
 
-    <input id="username" placeholder="username...">
-    <br>
-    <button onclick="login()">ENTER</button>
-  </div>
+<div class="login-box">
 
-  <script>
-    function login() {
-      let user = document.getElementById("username").value;
+  <h1>NASYA SECURITY SYSTEM</h1>
 
-      if (user.trim() === "") {
-        alert("Username tidak boleh kosong");
-      } else {
-        localStorage.setItem("username", user);
-        window.location.href = "home.html";
-      }
-    }
-  </script>
+  <input type="email" id="email" placeholder="Email">
+
+  <input type="text" id="username" placeholder="Username">
+
+  <input type="password" id="password" placeholder="Password">
+
+  <button id="loginBtn">LOGIN</button>
+
+  <p id="message"></p>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "MASUKKAN_APIKEY_KAMU",
+  authDomain: "MASUKKAN_AUTHDOMAIN_KAMU",
+  projectId: "MASUKKAN_PROJECTID_KAMU",
+  storageBucket: "MASUKKAN_STORAGEBUCKET_KAMU",
+  messagingSenderId: "MASUKKAN_MESSAGINGSENDERID_KAMU",
+  appId: "MASUKKAN_APPID_KAMU"
+};
+
+const app = initializeApp(firebaseConfig);
+
+document.getElementById("loginBtn")
+.addEventListener("click", function(){
+
+  const username =
+  document.getElementById("username").value;
+
+  const password =
+  document.getElementById("password").value;
+
+  const email =
+  document.getElementById("email").value;
+
+  const message =
+  document.getElementById("message");
+
+  if(username && password && email){
+
+    localStorage.setItem("username", username);
+    localStorage.setItem("email", email);
+
+    message.innerHTML =
+    "WELCOME " + username;
+
+    setTimeout(() => {
+      window.location.href = "portal.html";
+    }, 1500);
+
+  }else{
+
+    document.body.style.background = "red";
+
+    message.innerHTML = "ERROR";
+
+  }
+
+});
+
+</script>
 
 </body>
 </html>
