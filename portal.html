@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NASYA PORTAL</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050816;
+color:white;
+overflow-x:hidden;
+}
+
+.background{
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at top,#132c63,#050816);
+z-index:-1;
+}
+
+.header{
+padding:30px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#00e5ff;
+text-shadow:0 0 15px #00e5ff;
+}
+
+.welcome{
+text-align:center;
+font-size:18px;
+margin-bottom:20px;
+color:#8befff;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid #00e5ff;
+border-radius:20px;
+padding:25px;
+text-align:center;
+backdrop-filter:blur(10px);
+box-shadow:0 0 15px #00e5ff33;
+transition:0.3s;
+cursor:pointer;
+font-size:18px;
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 25px #00e5ff;
+}
+
+.plus{
+position:fixed;
+bottom:25px;
+right:25px;
+width:65px;
+height:65px;
+border-radius:50%;
+background:#00e5ff;
+color:black;
+font-size:40px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+box-shadow:0 0 20px #00e5ff;
+cursor:pointer;
+transition:0.3s;
+}
+
+.plus:hover{
+transform:rotate(90deg);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="header">
+NASYA SECURITY PORTAL
+</div>
+
+<div class="welcome" id="welcomeUser">
+WELCOME
+</div>
+
+<div class="container">
+
+<div class="card">
+👤<br><br>
+INFORMASI PEMILIK
+</div>
+
+<div class="card">
+🔒<br><br>
+BERKAS PRIBADI
+</div>
+
+<div class="card">
+🌌<br><br>
+MOMENT
+</div>
+
+<div class="card">
+✍<br><br>
+KARYA
+</div>
+
+<div class="card">
+🚀<br><br>
+INFO HARIAN NASA
+</div>
+
+<div class="card">
+🤖<br><br>
+ASISTEN AI
+</div>
+
+<div class="card">
+🛡<br><br>
+OWNER ACCESS
+</div>
+
+</div>
+
+<div class="plus">
++
+</div>
+
+<script>
+
+const username =
+localStorage.getItem("username");
+
+if(username){
+
+document.getElementById("welcomeUser")
+.innerHTML =
+"WELCOME " + username;
+
+}
+
+</script>
+
+</body>
+  </html>
