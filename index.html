@@ -145,9 +145,37 @@ document.getElementById("loginBtn")
 
   }else{
 
-    document.body.style.background = "red";
+    document.body.innerHTML = `
+<div style="
+background:red;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-family:Arial;
+animation:blink 0.3s infinite;
+color:white;
+">
 
-    message.innerHTML = "ERROR";
+<h1 style="font-size:60px;">
+ERROR‼️
+</h1>
+
+<p style="font-size:22px;">
+Cosa stai cercando?
+</p>
+
+</div>
+
+<style>
+@keyframes blink{
+0%{background:#ff0000;}
+50%{background:#550000;}
+100%{background:#ff0000;}
+}
+</style>
+`;
 
   }
 
