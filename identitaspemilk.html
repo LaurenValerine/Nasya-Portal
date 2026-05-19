@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IDENTITAS PRIBADI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050816;
+color:white;
+overflow-x:hidden;
+}
+
+.background{
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at top,#132c63,#050816);
+z-index:-1;
+}
+
+.header{
+padding:25px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+color:#00e5ff;
+text-shadow:0 0 15px #00e5ff;
+}
+
+.box{
+width:90%;
+max-width:500px;
+margin:auto;
+background:rgba(255,255,255,0.05);
+border:1px solid #00e5ff;
+border-radius:20px;
+padding:25px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 20px #00e5ff33;
+margin-top:20px;
+margin-bottom:40px;
+}
+
+input{
+width:95%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+outline:none;
+background:#0d1228;
+color:white;
+border:1px solid #00e5ff;
+}
+
+textarea{
+width:95%;
+height:100px;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+outline:none;
+background:#0d1228;
+color:white;
+border:1px solid #00e5ff;
+resize:none;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:15px;
+border:none;
+border-radius:12px;
+background:#00e5ff;
+color:black;
+font-weight:bold;
+cursor:pointer;
+font-size:16px;
+transition:0.3s;
+}
+
+button:hover{
+box-shadow:0 0 20px #00e5ff;
+}
+
+.data-box{
+margin-top:30px;
+padding:20px;
+border-radius:15px;
+background:rgba(255,255,255,0.05);
+border:1px solid #00e5ff;
+line-height:1.8;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="header">
+IDENTITAS PRIBADI
+</div>
+
+<div class="box">
+
+<div id="securityBox">
+
+<input type="password"
+id="securityPassword"
+placeholder="Masukkan Password">
+
+<button onclick="cekPassword()">
+AKSES IDENTITAS
+</button>
+
+</div>
+
+<div id="identitasForm"
+style="display:none;">
+
+<input type="text" id="nama" placeholder="Nama Lengkap">
+
+<input type="text" id="ttl" placeholder="Tempat, Tanggal Lahir">
+
+<input type="text" id="hobi" placeholder="Hobi">
+
+<input type="text" id="alamat" placeholder="Tempat Tinggal">
+
+<input type="text" id="makanan" placeholder="Makanan Favorit">
+
+<input type="text" id="minuman" placeholder="Minuman Favorit">
+
+<input type="text" id="film" placeholder="Film Favorit">
+
+<input type="text" id="telepon" placeholder="Nomor Telepon">
+
+<input type="text" id="instagram" placeholder="Instagram">
+
+<input type="text" id="tiktok" placeholder="TikTok">
+
+<input type="text" id="x" placeholder="X / Twitter">
+
+<input type="text" id="google" placeholder="Google / Email">
+
+<textarea id="catatan"
+placeholder="Catatan Tambahan"></textarea>
+
+<button onclick="simpanData()">
+SIMPAN IDENTITAS
+</button>
+
+<div class="data-box" id="hasilData">
+
+DATA BELUM DISIMPAN
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "MASUKKAN_APIKEY_KAMU",
+
+authDomain: "MASUKKAN_AUTHDOMAIN_KAMU",
+
+projectId: "MASUKKAN_PROJECTID_KAMU",
+
+storageBucket: "MASUKKAN_STORAGEBUCKET_KAMU",
+
+messagingSenderId: "MASUKKAN_MESSAGINGSENDERID_KAMU",
+
+appId: "MASUKKAN_APPID_KAMU"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+window.cekPassword = function(){
+
+const password =
+document.getElementById("securityPassword").value;
+
+if(password === "58@4@"){
+
+document.getElementById("securityBox")
+.style.display = "none";
+
+document.getElementById("identitasForm")
+.style.display = "block";
+
+}else{
+
+document.body.innerHTML = `
+
+<div style="
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:red;
+font-family:Arial;
+animation:blink 0.3s infinite;
+color:white;
+">
+
+<h1 style="
+font-size:70px;
+margin:0;
+">
+ERROR‼️
+</h1>
+
+<p style="
+font-size:22px;
+margin-top:15px;
+">
+Cosa stai cercando?
+</p>
+
+</div>
+
+<style>
+
+@keyframes blink{
+
+0%{
+background:#ff0000;
+}
+
+50%{
+background:#4d0000;
+}
+
+100%{
+background:#ff0000;
+}
+
+}
+
+</style>
+
+`;
+
+}
+
+}
+
+window.simpanData = async function(){
+
+const nama =
+document.getElementById("nama").value;
+
+const ttl =
+document.getElementById("ttl").value;
+
+const hobi =
+document.getElementById("hobi").value;
+
+const alamat =
+document.getElementById("alamat").value;
+
+const makanan =
+document.getElementById("makanan").value;
+
+const minuman =
+document.getElementById("minuman").value;
+
+const film =
+document.getElementById("film").value;
+
+const telepon =
+document.getElementById("telepon").value;
+
+const instagram =
+document.getElementById("instagram").value;
+
+const tiktok =
+document.getElementById("tiktok").value;
+
+const x =
+document.getElementById("x").value;
+
+const google =
+document.getElementById("google").value;
+
+const catatan =
+document.getElementById("catatan").value;
+
+await setDoc(doc(db,"identitas","owner"),{
+
+nama,
+ttl,
+hobi,
+alamat,
+makanan,
+minuman,
+film,
+telepon,
+instagram,
+tiktok,
+x,
+google,
+catatan
+
+});
+
+document.getElementById("hasilData")
+.innerHTML = `
+
+<b>IDENTITAS BERHASIL DISIMPAN SECARA PERMANEN</b>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
