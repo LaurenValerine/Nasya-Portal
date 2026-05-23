@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -80,16 +80,27 @@ box-shadow:0 0 20px #00e5ff;
 }
 
 .file-box{
-margin-top:25px;
+margin-top:20px;
 padding:15px;
 border-radius:15px;
 background:rgba(255,255,255,0.05);
 border:1px solid #00e5ff;
 }
 
+img{
+width:100%;
+border-radius:12px;
+margin-top:10px;
+}
+
+video{
+width:100%;
+border-radius:12px;
+margin-top:10px;
+}
+
 a{
 color:#8befff;
-text-decoration:none;
 }
 
 </style>
@@ -133,40 +144,23 @@ UPLOAD BERKAS
 
 </div>
 
-<script type="module">
+<script>
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+window.onload = function(){
 
-import {
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
+const saved =
+localStorage.getItem("berkasHTML");
+
+if(saved){
+
+document.getElementById("hasilFile")
+.innerHTML = saved;
+
 }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
-const firebaseConfig = {
+}
 
-apiKey: "AIzaSyDNFcrqvtonunXvodvTYkbgSPnFatxN9FY",
-
-authDomain: "nasya-security-system.firebaseapp.com",
-
-projectId: "nasya-security-system",
-
-storageBucket: "nasya-security-system.appspot.com",",
-
-messagingSenderId: "385853954914",
-
-appId: "1:385853954914:web:6b2277430224b6cecb2a3b"
-
-};
-
-const app = initializeApp(firebaseConfig);
-
-const storage = getStorage(app);
-
-window.cekPassword = function(){
+function cekPassword(){
 
 const password =
 document.getElementById("securityPassword").value;
@@ -237,7 +231,7 @@ background:#ff0000;
 
 }
 
-window.uploadFile = async function(){
+function uploadFile(){
 
 const file =
 document.getElementById("fileInput")
@@ -251,28 +245,57 @@ return;
 
 }
 
-const storageRef =
-ref(storage,
-"berkas/" + file.name);
+const reader =
+new FileReader();
 
-await uploadBytes(storageRef,file);
+reader.onload = function(e){
 
-const url =
-await getDownloadURL(storageRef);
+let fileHTML = "";
 
-document.getElementById("hasilFile")
-.innerHTML += `
+if(file.type.startsWith("image")){
+
+fileHTML = `
 
 <div class="file-box">
 
-📁 ${file.name}
+📷 ${file.name}
+
+<img src="${e.target.result}">
+
+</div>
+
+`;
+
+}else if(file.type.startsWith("video")){
+
+fileHTML = `
+
+<div class="file-box">
+
+🎥 ${file.name}
+
+<video controls>
+<source src="${e.target.result}">
+</video>
+
+</div>
+
+`;
+
+}else{
+
+fileHTML = `
+
+<div class="file-box">
+
+📄 ${file.name}
 
 <br><br>
 
-<a href="${url}"
-target="_blank">
+<a href="${e.target.result}"
+download>
 
-Buka Berkas
+Download File
 
 </a>
 
@@ -282,7 +305,22 @@ Buka Berkas
 
 }
 
+document.getElementById("hasilFile")
+.innerHTML += fileHTML;
+
+localStorage.setItem(
+"berkasHTML",
+document.getElementById("hasilFile")
+.innerHTML
+);
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
 </script>
 
 </body>
-</html>
+</html> 
