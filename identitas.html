@@ -58,6 +58,7 @@ outline:none;
 background:#0d1228;
 color:white;
 border:1px solid #00e5ff;
+box-sizing:border-box;
 }
 
 textarea{
@@ -72,6 +73,7 @@ background:#0d1228;
 color:white;
 border:1px solid #00e5ff;
 resize:none;
+box-sizing:border-box;
 }
 
 button{
@@ -90,6 +92,11 @@ transition:0.3s;
 
 button:hover{
 box-shadow:0 0 20px #00e5ff;
+}
+
+button:disabled{
+opacity:0.6;
+cursor:wait;
 }
 
 .data-box{
@@ -117,7 +124,8 @@ IDENTITAS PRIBADI
 
 <div id="securityBox">
 
-<input type="password"
+<input
+type="password"
 id="securityPassword"
 placeholder="Masukkan Password">
 
@@ -127,8 +135,8 @@ AKSES IDENTITAS
 
 </div>
 
-<div id="identitasForm"
-style="display:none;">
+
+<div id="identitasForm" style="display:none;">
 
 <input type="text" id="nama" placeholder="Nama Lengkap">
 
@@ -154,12 +162,14 @@ style="display:none;">
 
 <input type="text" id="google" placeholder="Google / Email">
 
-<textarea id="catatan"
+<textarea
+id="catatan"
 placeholder="Catatan Tambahan"></textarea>
 
-<button onclick="simpanData()">
+<button id="simpanBtn" onclick="simpanData()">
 SIMPAN IDENTITAS
 </button>
+
 
 <div class="data-box" id="hasilData">
 
@@ -170,6 +180,7 @@ DATA BELUM DISIMPAN
 </div>
 
 </div>
+
 
 <script type="module">
 
@@ -183,6 +194,11 @@ setDoc,
 getDoc
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE
+========================= */
 
 const firebaseConfig = {
 
@@ -204,60 +220,32 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
+
+/* =========================
+   REFERENSI DOKUMEN
+========================= */
+
+const ownerRef = doc(
+db,
+"identitas",
+"Owner"
+);
+
+
+/* =========================
+   AKSES IDENTITAS
+========================= */
+
 window.cekPassword = async function(){
 
 const password =
 document.getElementById("securityPassword").value;
 
-if(password === "58@4@"){
+const hasil =
+document.getElementById("hasilData");
 
-document.getElementById("securityBox")
-.style.display = "none";
 
-document.getElementById("identitasForm")
-.style.display = "block";
-
-const docRef = doc(db,"identitas","Owner");
-
-const docSnap = await getDoc(docRef);
-
-if(docSnap.exists()){
-
-const data = docSnap.data();
-
-document.getElementById("nama").value = data.nama || "";
-
-document.getElementById("ttl").value = data.ttl || "";
-
-document.getElementById("hobi").value = data.hobi || "";
-
-document.getElementById("alamat").value = data.alamat || "";
-
-document.getElementById("makanan").value = data.makanan || "";
-
-document.getElementById("minuman").value = data.minuman || "";
-
-document.getElementById("film").value = data.film || "";
-
-document.getElementById("telepon").value = data.telepon || "";
-
-document.getElementById("instagram").value = data.instagram || "";
-
-document.getElementById("tiktok").value = data.tiktok || "";
-
-document.getElementById("x").value = data.x || "";
-
-document.getElementById("google").value = data.google || "";
-
-document.getElementById("catatan").value = data.catatan || "";
-
-document.getElementById("hasilData")
-.innerHTML =
-"<b>DATA IDENTITAS BERHASIL DIMUAT</b>";
-
-}
-
-}else{
+if(password !== "58@4@"){
 
 document.body.innerHTML = `
 
@@ -269,53 +257,138 @@ justify-content:center;
 align-items:center;
 background:red;
 font-family:Arial;
-animation:blink 0.3s infinite;
 color:white;
+text-align:center;
 ">
 
-<h1 style="
-font-size:70px;
-margin:0;
-">
+<h1 style="font-size:70px;margin:0;">
 ERROR‼️
 </h1>
 
-<p style="
-font-size:22px;
-margin-top:15px;
-">
+<p style="font-size:22px;">
 Cosa stai cercando?
 </p>
 
 </div>
 
-<style>
-
-@keyframes blink{
-
-0%{
-background:#ff0000;
-}
-
-50%{
-background:#4d0000;
-}
-
-100%{
-background:#ff0000;
-}
-
-}
-
-</style>
-
 `;
 
-}
+return;
 
 }
+
+
+/* =========================
+   BUKA FORM
+========================= */
+
+document.getElementById("securityBox")
+.style.display = "none";
+
+document.getElementById("identitasForm")
+.style.display = "block";
+
+
+/* =========================
+   AMBIL DATA DARI FIREBASE
+========================= */
+
+hasil.innerHTML =
+"🔄 <b>MEMUAT DATA...</b>";
+
+
+try{
+
+const docSnap =
+await getDoc(ownerRef);
+
+
+if(docSnap.exists()){
+
+const data =
+docSnap.data();
+
+
+/* ISI FORM OTOMATIS */
+
+document.getElementById("nama").value =
+data.nama || "";
+
+document.getElementById("ttl").value =
+data.ttl || "";
+
+document.getElementById("hobi").value =
+data.hobi || "";
+
+document.getElementById("alamat").value =
+data.alamat || "";
+
+document.getElementById("makanan").value =
+data.makanan || "";
+
+document.getElementById("minuman").value =
+data.minuman || "";
+
+document.getElementById("film").value =
+data.film || "";
+
+document.getElementById("telepon").value =
+data.telepon || "";
+
+document.getElementById("instagram").value =
+data.instagram || "";
+
+document.getElementById("tiktok").value =
+data.tiktok || "";
+
+document.getElementById("x").value =
+data.x || "";
+
+document.getElementById("google").value =
+data.google || "";
+
+document.getElementById("catatan").value =
+data.catatan || "";
+
+
+/* STATUS */
+
+hasil.innerHTML =
+"✅ <b>DATA TERSIMPAN</b>";
+
+}else{
+
+hasil.innerHTML =
+"⚠️ <b>DATA BELUM DISIMPAN</b>";
+
+}
+
+}catch(error){
+
+console.error(error);
+
+hasil.innerHTML =
+"❌ <b>GAGAL MEMUAT DATA</b>";
+
+}
+
+};
+
+
+/* =========================
+   SIMPAN DATA
+========================= */
 
 window.simpanData = async function(){
+
+const tombol =
+document.getElementById("simpanBtn");
+
+const hasil =
+document.getElementById("hasilData");
+
+
+/* AMBIL DATA */
 
 const nama =
 document.getElementById("nama").value;
@@ -356,7 +429,27 @@ document.getElementById("google").value;
 const catatan =
 document.getElementById("catatan").value;
 
-await setDoc(doc(db,"identitas","Owner"),{
+
+/* STATUS */
+
+hasil.innerHTML =
+"🔄 <b>MENYIMPAN DATA...</b>";
+
+tombol.disabled = true;
+
+
+try{
+
+
+/* =========================
+   SIMPAN KE FIREBASE
+========================= */
+
+await setDoc(
+
+ownerRef,
+
+{
 
 nama,
 ttl,
@@ -372,16 +465,49 @@ x,
 google,
 catatan
 
-});
+},
 
-document.getElementById("hasilData")
-.innerHTML = `
+{
 
-<b>IDENTITAS BERHASIL DISIMPAN SECARA PERMANEN</b>
+merge:true
 
+}
+
+);
+
+
+/* =========================
+   BERHASIL
+========================= */
+
+hasil.innerHTML = `
+✅ <b>DATA TERSIMPAN</b>
+<br>
+<small>Data berhasil disimpan secara permanen.</small>
+`;
+
+
+}catch(error){
+
+console.error(error);
+
+
+/* =========================
+   GAGAL
+========================= */
+
+hasil.innerHTML = `
+❌ <b>DATA GAGAL DISIMPAN</b>
+<br>
+<small>Periksa koneksi atau Firebase.</small>
 `;
 
 }
+
+
+tombol.disabled = false;
+
+};
 
 </script>
 
