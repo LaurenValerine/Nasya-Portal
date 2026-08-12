@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -217,7 +217,7 @@ document.getElementById("securityBox")
 document.getElementById("identitasForm")
 .style.display = "block";
 
-const docRef = doc(db,"identitas","owner");
+const docRef = doc(db,"identitas","Owner");
 
 const docSnap = await getDoc(docRef);
 
@@ -356,7 +356,7 @@ document.getElementById("google").value;
 const catatan =
 document.getElementById("catatan").value;
 
-await setDoc(doc(db,"identitas","owner"),{
+await setDoc(doc(db,"identitas","Owner"),{
 
 nama,
 ttl,
